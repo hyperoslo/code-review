@@ -1,4 +1,5 @@
 require "sinatra"
+require "json"
 require "pony"
 
 # A string describing the odds of a code review (e.g. "1:10").
