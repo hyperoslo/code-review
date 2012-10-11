@@ -25,15 +25,22 @@ Pony.options = {
 post "/" do
   data = JSON.parse request.body.read
 
-  x, y              = ODDS.split ":"
-  chance            = ((x.to_f / (y.to_f - 1)) * 100) * data["commits"].size
+  commits = data["commits"]
+
+  x, y = ODDS.split ":"
+  chance = ((x.to_f / (y.to_f - 1)) * 100) * commits.size
+
+  commit = commits.sample
 
   if rand(100) <= chance
     Pony.mail({
       to: RECIPIENTS.sample,
       from: "Hyper <no-reply@hyper.no>",
       subject: "You've been selected to review!",
-      body: erb(:reviewer_email),
+      body: erb(:reviewer_email, locals: {
+        reviewee: commit["name"],
+        url: commit["url"]
+      })
     })
   end
 end
