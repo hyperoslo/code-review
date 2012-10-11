@@ -30,15 +30,16 @@ post "/" do
   x, y = ODDS.split ":"
   chance = ((x.to_f / (y.to_f - 1)) * 100)
 
-
   commits.each do |commit|
     if rand(100) <= chance
-      recipient = RECIPIENTS.sample
+      recipient = RECIPIENTS.reject do |recipient|
+        recipient == commit["author"]["email"]
+      end.sample
 
       Pony.mail({
         to: recipient,
         from: "Hyper <no-reply@hyper.no>",
-        subject: "You've been selected to review #{commit["author"]["name"]}'s code!",
+        subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
         body: erb(:reviewer_email, locals: {
           reviewee: commit["author"]["name"],
           url: commit["url"]
@@ -48,7 +49,7 @@ post "/" do
       Pony.mail({
         to: recipient,
         from: "Hyper <no-reply@hyper.no>",
-        subject: "Your code has been selected for review!",
+        subject: "Your commit has been selected for review",
         body: erb(:reviewee_email, locals: {
           reviewer: recipient,
           url: commit["url"]
