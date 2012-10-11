@@ -38,7 +38,7 @@ post "/" do
       from: "Hyper <no-reply@hyper.no>",
       subject: "You've been selected to review!",
       body: erb(:reviewer_email, locals: {
-        reviewee: commit["name"],
+        reviewee: commit["author"]["name"],
         url: commit["url"]
       })
     })
