@@ -32,7 +32,8 @@ post "/" do
 
   commits.each do |commit|
     if rand(100) <= chance
-      recipient = RECIPIENTS.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }.sample
+      #recipient = RECIPIENTS.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }.sample
+      recipient = RECIPIENTS.sample
 
       Pony.mail({
         to: recipient,
