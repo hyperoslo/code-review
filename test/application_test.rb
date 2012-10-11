@@ -14,7 +14,7 @@ class ApplicationTest < Test::Unit::TestCase
   end
 
   def test_it_says_hello
-    post "/", {
+    post "/", JSON.dump({
       :before => "95790bf891e76fee5e1747ab589903a6a1f80f22",
       :after => "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
       :ref => "refs/heads/master",
@@ -39,8 +39,8 @@ class ApplicationTest < Test::Unit::TestCase
           :timestamp => "2011-12-12T14:28:35+02:00",
         }
       ]
-    }
+    })
 
-    raise StandardError, last_response.body
+    assert last_response.ok?
   end
 end

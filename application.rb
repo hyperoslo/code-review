@@ -26,7 +26,7 @@ post "/" do
   data = JSON.parse request.body.read
 
   x, y              = ODDS.split ":"
-  chance            = ((x.to_f / (y.to_f - 1)) * 100) * data[:commits].size
+  chance            = ((x.to_f / (y.to_f - 1)) * 100) * data["commits"].size
 
   if rand(1..100) <= chance
     Pony.mail({
