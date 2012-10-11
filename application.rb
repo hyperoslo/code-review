@@ -6,7 +6,7 @@ ODDS       = ENV["ODDS"]
 
 # A string describing a comma-separated list of e-mail addresses
 # a code review might be addressed to.
-RECIPIENTS = ENV["RECIPIENTS"].split ":"
+RECIPIENTS = ENV["RECIPIENTS"].split ","
 
 Pony.options = {
   via: :smtp,
@@ -22,8 +22,10 @@ Pony.options = {
 }
 
 post "/" do
+  data = JSON.parse request.body.read
+
   x, y              = ODDS.split ":"
-  chance            = ((x.to_f / (y.to_f - 1)) * 100) * params[:commits].size
+  chance            = ((x.to_f / (y.to_f - 1)) * 100) * data[:commits].size
 
   if rand(1..100) <= chance
     Pony.mail({
