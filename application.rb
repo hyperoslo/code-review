@@ -28,7 +28,7 @@ post "/" do
   x, y              = ODDS.split ":"
   chance            = ((x.to_f / (y.to_f - 1)) * 100) * data["commits"].size
 
-  if rand(1..100) <= chance
+  if rand(100) <= chance
     Pony.mail({
       to: RECIPIENTS.sample,
       from: "Hyper <no-reply@hyper.no>",
