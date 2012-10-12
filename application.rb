@@ -7,7 +7,7 @@ configure do
   set :odds, ENV["ODDS"]
 
   # A list of strings describing e-mail addresses a code review may be addressed to.
-  set :recipients, ENV["RECIPIENTS"].split ","
+  set :recipients, ENV["RECIPIENTS"].split(",")
 end
 
 Pony.options = {
