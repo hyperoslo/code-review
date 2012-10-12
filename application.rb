@@ -3,10 +3,9 @@ require "json"
 require "pony"
 
 # A string describing the odds of a code review (e.g. "1:10").
-ODDS       = ENV["ODDS"]
+ODDS = ENV["ODDS"]
 
-# A string describing a comma-separated list of e-mail addresses
-# a code review might be addressed to.
+# A list of strings describing e-mail addresses a code review may be addressed to.
 RECIPIENTS = ENV["RECIPIENTS"].split ","
 
 Pony.options = {
@@ -25,12 +24,10 @@ Pony.options = {
 post "/" do
   data = JSON.parse request.body.read
 
-  commits = data["commits"]
-
   x, y = ODDS.split ":"
   chance = ((x.to_f / (y.to_f - 1)) * 100)
 
-  commits.each do |commit|
+  data["commits"].each do |commit|
     if rand(100) <= chance
       eligible_recipients = RECIPIENTS.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }
 
