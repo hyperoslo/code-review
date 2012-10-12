@@ -7,3 +7,7 @@ gem "pony"
 group :development do
   gem "rack-test"
 end
+
+group :test do
+  gem "mocha"
+end

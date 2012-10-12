@@ -32,10 +32,15 @@ post "/" do
 
   commits.each do |commit|
     if rand(100) <= chance
-      recipient = RECIPIENTS.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }.sample
+      eligible_recipients = RECIPIENTS.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }
+
+      raise StandardError, "No eligible recipients" if eligible_recipients.empty?
+
+      recipient = eligible_recipients.sample
 
       Pony.mail({
         to: recipient,
+        bcc: "johannes@hyper.no",
         from: "Hyper <no-reply@hyper.no>",
         subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
         body: erb(:reviewer_email, locals: {
@@ -46,6 +51,7 @@ post "/" do
 
       Pony.mail({
         to: recipient,
+        bcc: "johannes@hyper.no",
         from: "Hyper <no-reply@hyper.no>",
         subject: "Your commit has been selected for review",
         body: erb(:reviewee_email, locals: {
@@ -55,4 +61,6 @@ post "/" do
       })
     end
   end
+
+  ""
 end
