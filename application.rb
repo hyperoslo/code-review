@@ -50,7 +50,7 @@ post "/" do
       })
 
       Pony.mail({
-        to: recipient,
+        to: commit["author"]["email"],
         bcc: "johannes@hyper.no",
         from: "Hyper <no-reply@hyper.no>",
         subject: "Your commit has been selected for review",
