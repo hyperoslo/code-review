@@ -10,3 +10,14 @@ The application looks to the process' environment variables for its configuratio
 * `RECIPIENTS` - A comma-separated list of e-mail addresses that code reviews may be addressed to.
 * `SENDGRID_USERNAME` - A string describing the SMTP username for SendGrid.
 * `SENDGRID_PASSWORD` - A string describing the SMTP password for SendGrid.
+
+## Development
+
+Install the dependencies:
+
+    $ bundle install
+
+Run the tests with either `rake` or `guard`:
+
+    $ bundle exec rake test
+    $ bundle exec guard start
