@@ -30,33 +30,36 @@ post "/" do
 
   data["commits"].each do |commit|
     if rand(100) <= chance
-      eligible_recipients = settings.recipients.reject { |recipient| recipient =~ /#{commit["author"]["email"]}/ }
 
-      raise StandardError, "No eligible recipients" if eligible_recipients.empty?
+      recipients = settings.recipients.reject do |recipient|
+        recipient == commit["author"]["email"]
+      end
 
-      recipient = eligible_recipients.sample
+      recipient = recipients.sample
 
-      Pony.mail({
-        to: recipient,
-        bcc: "johannes@hyper.no",
-        from: "Hyper <no-reply@hyper.no>",
-        subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
-        body: erb(:reviewer_email, locals: {
-          reviewee: commit["author"]["name"],
-          url: commit["url"]
+      if recipient
+
+        Pony.mail({
+          to: recipient,
+          from: "Hyper <no-reply@hyper.no>",
+          subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
+          body: erb(:reviewer_email, locals: {
+            reviewee: commit["author"]["name"],
+            url: commit["url"]
+          })
         })
-      })
 
-      Pony.mail({
-        to: commit["author"]["email"],
-        bcc: "johannes@hyper.no",
-        from: "Hyper <no-reply@hyper.no>",
-        subject: "Your commit has been selected for review",
-        body: erb(:reviewee_email, locals: {
-          reviewer: recipient,
-          url: commit["url"]
+        Pony.mail({
+          to: commit["author"]["email"],
+          from: "Hyper <no-reply@hyper.no>",
+          subject: "Your commit has been selected for review",
+          body: erb(:reviewee_email, locals: {
+            reviewer: recipient,
+            url: commit["url"]
+          })
         })
-      })
+
+      end
     end
   end
 
