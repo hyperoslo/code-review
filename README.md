@@ -1,6 +1,6 @@
 # Code review
 
-This is a simple application that selects a random commit for code review.
+A simple application that selects a random commit for code review.
 
 ## Configuration
 
