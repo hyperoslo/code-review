@@ -8,7 +8,7 @@ A simple application that selects a random commit for code review.
 
 ## Configuration
 
-The application looks to the process' environment variables for its configuration, specifically:
+The application looks to the following environment variables for its configuration:
 
 * `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. "1:25").
 * `REVIEWERS` - A comma-separated list of e-mail addresses that code reviews may be addressed to.
