@@ -8,8 +8,11 @@ The application looks to the process' environment variables for its configuratio
 
 * `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. "1:25").
 * `REVIEWERS` - A comma-separated list of e-mail addresses that code reviews may be addressed to.
-* `SENDGRID_USERNAME` - A string describing the SMTP username for SendGrid.
-* `SENDGRID_PASSWORD` - A string describing the SMTP password for SendGrid.
+* `SMTP_HOST` - A string describing the SMTP host.
+* `SMTP_PORT` - A string describing the SMTP port.
+* `SMTP_DOMAIN` - A string describing the SMTP domain.
+* `SMTP_USERNAME` - A string describing the SMTP username.
+* `SMTP_PASSWORD` - A string describing the SMTP password.
 
 ## Development
 
