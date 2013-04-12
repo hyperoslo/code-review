@@ -7,6 +7,12 @@ gem "sentry-raven"
 
 group :development do
   gem "rack-test"
+
+  gem "guard"
+  gem "guard-minitest"
+  gem "rb-inotify", require: false
+  gem "rb-fsevent", require: false
+  gem "rb-fchange", require: false
 end
 
 group :test do
