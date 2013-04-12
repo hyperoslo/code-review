@@ -34,7 +34,29 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ]
     }
 
-    2.times { Pony.expects :mail }
+    Pony.
+      expects(
+        :mail
+      ).
+      with(
+        has_entries(
+          to: any_of("tim@hyper.no", "johannes@hyper.no", "espen@hyper.no"),
+          subject: "You've been selected to review Johannes Gorset's commit",
+          from: "Hyper <no-reply@hyper.no>"
+        )
+      )
+
+    Pony.
+      expects(
+        :mail
+      ).
+      with(
+        has_entries(
+          to: "johannes@hyper.no",
+          subject: "Your commit has been selected for review",
+          from: "Hyper <no-reply@hyper.no>"
+        )
+      )
 
     post "/", payload.to_json
   end
