@@ -26,8 +26,7 @@ Pony.options = {
 post "/" do
   data = JSON.parse request.body.read
 
-  x, y = settings.odds.split ":"
-  chance = ((x.to_f / (y.to_f - 1)) * 100)
+  chance = Odds.parse settings.odds
 
   data["commits"].each do |commit|
     if rand(100) <= chance
