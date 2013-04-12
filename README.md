@@ -1,5 +1,7 @@
 # Code review
 
+[![Code Climate](https://codeclimate.com/github/hyperoslo/code-review.png)](https://codeclimate.com/github/hyperoslo/code-review)
+
 A simple application that selects a random commit for code review.
 
 ## Configuration
