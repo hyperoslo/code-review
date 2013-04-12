@@ -28,3 +28,8 @@ Run the tests with either `rake` or `guard`:
 
     $ bundle exec rake test
     $ bundle exec guard start
+
+## Credits
+
+Hyper made this. We're a digital communications agency with a passion for good code,
+and if you're using this application we probably want to hire you.
