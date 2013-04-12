@@ -8,6 +8,7 @@ gem "sentry-raven"
 group :development do
   gem "rack-test"
 
+  gem "rake"
   gem "guard"
   gem "guard-minitest"
   gem "rb-inotify", require: false
