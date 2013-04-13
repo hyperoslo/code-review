@@ -29,6 +29,10 @@ class ApplicationTest < MiniTest::Unit::TestCase
           author: {
            name: "Johannes Gorset",
            email: "johannes@hyper.no"
+          },
+          committer: {
+           name: "Johannes Gorset",
+           email: "johannes@hyper.no"
           }
         }
       ]
