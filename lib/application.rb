@@ -32,7 +32,7 @@ post "/" do
     if rand(100) <= chance
 
       reviewers = settings.reviewers.reject do |reviewer|
-        reviewer == commit["author"]["email"]
+        reviewer == commit["committer"]["email"]
       end
 
       reviewer = reviewers.sample
@@ -50,7 +50,7 @@ post "/" do
         })
 
         Pony.mail({
-          to: commit["author"]["email"],
+          to: commit["committer"]["email"],
           from: "Hyper <no-reply@hyper.no>",
           subject: "Your commit has been selected for review",
           body: erb(:reviewee_email, locals: {
