@@ -6,7 +6,7 @@ Coveralls.wear!
 
 ENV["RACK_ENV"]   = "test"
 ENV["ODDS"]       = "1:1"
-ENV["REVIEWERS"] = "johannes@hyper.no,espen@hyper.no,tim@hyper.no"
+ENV["REVIEWERS"] = "johannes@gmail.com:johannes@hyper.no,tim@gmail.com:tim@hyper.no,espen@gmail.com:espen@hyper.no"
 
 require "application"
 require "odds"
