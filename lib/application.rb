@@ -58,7 +58,7 @@ post "/" do
         })
 
         Pony.mail({
-          to: commit["committer"]["email"],
+          to: commit["author"]["email"],
           from: "Hyper <no-reply@hyper.no>",
           subject: "Your commit has been selected for review",
           body: erb(:reviewee_email, locals: {
