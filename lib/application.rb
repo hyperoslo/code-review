@@ -7,7 +7,15 @@ configure do
   set :odds, ENV["ODDS"]
 
   # A list of strings describing e-mail addresses a code review may be addressed to.
-  set :reviewers, ENV["REVIEWERS"].split(",")
+
+  raw_reviewers = ENV["REVIEWERS"].split(",")
+  reviewers = []
+  raw_reviewers.each do |reviewer|
+    personal, work = reviewer.split(":")
+    reviewers << { personal: personal, work: work }
+  end
+
+  set :reviewers, reviewers
 end
 
 Pony.options = {
@@ -32,7 +40,7 @@ post "/" do
     if rand(100) <= chance
 
       reviewers = settings.reviewers.reject do |reviewer|
-        reviewer == commit["committer"]["email"]
+        reviewer.has_value? commit["author"]["email"]
       end
 
       reviewer = reviewers.sample
@@ -40,7 +48,7 @@ post "/" do
       if reviewer
 
         Pony.mail({
-          to: reviewer,
+          to: reviewer[:work],
           from: "Hyper <no-reply@hyper.no>",
           subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
           body: erb(:reviewer_email, locals: {
