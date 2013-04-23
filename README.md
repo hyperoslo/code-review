@@ -10,7 +10,7 @@ A simple Sinatra application selects random commits for review when you push to 
 
 The application looks to the following environment variables for its configuration:
 
-* `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. "1:25").
+* `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. `1:25`).
 * `REVIEWERS` - A comma-separated list of e-mail address pairs (first and second in pair separated by a colon) that code reviews
   may be addressed to. For example `john@home.com:john@work.com,jane@home.com:jane@work.com`.
 * `SMTP_HOST` - A string describing the SMTP host.
