@@ -7,7 +7,6 @@ configure do
   set :odds, ENV["ODDS"]
 
   # A list of strings describing e-mail addresses a code review may be addressed to.
-
   raw_reviewers = ENV["REVIEWERS"].split(",")
   reviewers = []
   raw_reviewers.each do |reviewer|
