@@ -12,7 +12,7 @@ The application looks to the following environment variables for its configurati
 
 * `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. "1:25").
 * `REVIEWERS` - A comma-separated list of e-mail address pairs (first and second in pair separated by a colon) that code reviews
-  may be addressed to. **Example:** "user1@personal.com:user1@work.com,user2@personal.com:user2@work.com,..."
+  may be addressed to. For example `john@home.com:john@work.com,jane@home.com:jane@work.com`.
 * `SMTP_HOST` - A string describing the SMTP host.
 * `SMTP_PORT` - A string describing the SMTP port.
 * `SMTP_DOMAIN` - A string describing the SMTP domain.
