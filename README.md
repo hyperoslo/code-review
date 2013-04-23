@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/hyperoslo/code-review.png?branch=master)](https://travis-ci.org/hyperoslo/code-review)
 [![Coverage Status](https://coveralls.io/repos/hyperoslo/code-review/badge.png?branch=master)](https://coveralls.io/r/hyperoslo/code-review)
 
-A simple application that selects a random commit for code review.
+A simple Sinatra application selects random commits for review when you push to [GitLab](http://gitlab.org/).
 
 ## Configuration
 
