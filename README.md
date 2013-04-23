@@ -25,10 +25,9 @@ Install the dependencies:
 
     $ bundle install
 
-Run the tests with either `rake` or `guard`:
+Run the tests:
 
     $ bundle exec rake test
-    $ bundle exec guard start
 
 ## Credits
 
