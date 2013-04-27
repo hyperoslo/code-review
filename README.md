@@ -4,7 +4,9 @@
 [![Build Status](https://travis-ci.org/hyperoslo/code-review.png?branch=master)](https://travis-ci.org/hyperoslo/code-review)
 [![Coverage Status](https://coveralls.io/repos/hyperoslo/code-review/badge.png?branch=master)](https://coveralls.io/r/hyperoslo/code-review)
 
-A simple Sinatra application selects random commits for review when you push to [GitLab](http://gitlab.org/).
+We ship a lot of code at Hyper, and we're proud of every bit of it. We built this simple application to
+select random commits for review whenever we push code so we can show it off or
+ridicule [@espenhogbakk](https://github.com/espenhogbakk) whenever he version controls his passwords.
 
 ## Configuration
 
