@@ -7,7 +7,7 @@ gem "sentry-raven"
 
 group :development do
   gem "rack-test"
-
+  gem "foreman"
   gem "rake"
   gem "guard"
   gem "guard-minitest"
