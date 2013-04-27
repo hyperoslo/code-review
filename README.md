@@ -29,6 +29,10 @@ Run the tests:
 
     $ bundle exec rake test
 
+Run the server:
+
+    $ bundle exec rackup
+
 ## Credits
 
 Hyper made this. We're a digital communications agency with a passion for good code,
