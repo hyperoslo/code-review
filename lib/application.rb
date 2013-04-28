@@ -58,11 +58,8 @@ end
 post "/" do
   data = JSON.parse request.body.read
 
-  chance = Odds.parse settings.odds
-
   data["commits"].each do |commit|
-    if rand(100) <= chance
-
+    if Odds.roll settings.odds
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample

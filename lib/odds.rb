@@ -1,6 +1,18 @@
 module Odds
   extend self
 
+  # Do you feel lucky, punk?
+  #
+  # string - A String describing the odds.
+  #
+  # Returns a Boolean describing whether the roll was successful.
+  def roll string
+    pool     = rand 100
+    fraction = parse string
+
+    pool <= fraction
+  end
+
   # Parse odds.
   #
   # string - A String describing the odds.
