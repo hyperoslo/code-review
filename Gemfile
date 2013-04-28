@@ -4,6 +4,9 @@ source "https://rubygems.org"
 gem "sinatra"
 gem "pony"
 gem "sentry-raven"
+gem "httparty"
+gem "pygments.rb"
+gem "gravatar-ultimate", github: "jgorset/gravatar"
 
 group :development do
   gem "rack-test"

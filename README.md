@@ -8,6 +8,8 @@ We ship a lot of code at Hyper, and we're proud of every bit of it. We built thi
 select random commits for review whenever we push code so we can show it off or
 ridicule [@espenhogbakk](https://github.com/espenhogbakk) whenever he version controls his passwords.
 
+![Example](https://raw.github.com/hyperoslo/code-review/master/doc/example.png)
+
 ## Configuration
 
 The application looks to the following environment variables for its configuration:

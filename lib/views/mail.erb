@@ -1,0 +1,194 @@
+<style>
+
+  pre {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted #444;
+    padding-bottom: 1px;
+  }
+
+  a:hover {
+    border-bottom: 1px solid #444;
+  }
+
+  #container {
+    width: 700px;
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 1.4;
+    font-family: Helvetica, sans-serif;
+    color: #333;
+    margin-bottom: 50px;
+  }
+
+  header {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    margin-top: -40px;
+  }
+
+  header h1 {
+    background: #fff;
+    display: inline-block;
+    position: relative;
+    top: 36px;
+    padding: 15px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .commit {
+    background: #e6f1f6;
+    padding: 8px 8px 0;
+    border: 1px solid #e6f1f6;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .commit:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  .commit .message {
+    display: block;
+    color: #213f4d;
+    text-shadow: 1px rgba(255, 255, 255, 0.5);
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .commit .meta {
+    float: left;
+    width: 100%;
+    font-weight: bold;
+    border-top: 1px solid #d8e6ec;
+    font-size: 14px;
+    margin: 0 -8px;
+    padding: 8px;
+    background: #fff;
+  }
+
+  .commit .author {
+    width: 250px;
+    float: left;
+  }
+
+  .commit .author .portrait {
+    border-radius: 3px;
+    margin: -3px;
+    margin-right: 3px;
+    vertical-align: middle;
+  }
+
+  .commit .sha {
+    text-align: right;
+    width: 400px;
+    float: right;
+    font-weight: normal;
+    font-family: Monaco;
+    font-size: 12px;
+  }
+
+  .commit .sha .label {
+    color: #888;
+  }
+
+  .commit .sha .value {
+    color: #444;
+  }
+
+  .diff {
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    font-size: 12px;
+    overflow: scroll;
+  }
+
+  [id^=line-] {
+    display: block;
+    padding: 2px;
+  }
+
+  .gu, .gd, .gi, .gh {
+    display: block;
+    padding: 3px;
+    margin: -2px;
+  }
+
+  footer {
+    margin-top: 30px;
+    padding-top: 10px;
+    border-top: 1px solid #e6f1f6;
+    color: #666;
+    font-size: 12px;
+  }
+
+  footer .credits {
+    float: left;
+  }
+
+  footer .contribute {
+    float: right;
+    text-align: right;
+  }
+
+  footer .license{
+    float: right;
+    text-align: right;
+    margin-right: 10px;
+  }
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="stylesheets/github.css" />
+
+<div id="container">
+
+  <header>
+    <h1>Code Review</h1>
+  </header>
+
+  <div class="commit">
+    <strong class="message"><%= commit["message"] %></strong>
+    <div class="meta">
+      <div class="author">
+        <img class="portrait" height="24" width="24" src="<%= gravatar.image_url %>" />
+        <span class="name"><%= commit["author"]["name"] %></span>
+      </div>
+      <div class="sha">
+        <span class="label">commit</span>
+        <span class="value"><a href="<%= commit["url"] %>"><%= commit["id"] %></a></span>
+      </div >
+    </div>
+  </div>
+
+  <div class="diff">
+    <%= Pygments.highlight diff, lexer: "diff", options: { linespans: "line", lineseparator: "" } %>
+  </div>
+
+  <footer>
+    <div class="credits">
+      <a href="http://hyper.no">Hyper</a> made this
+    </div>
+
+    <div class="contribute">
+      <a href="https://github.com/hyperoslo/code-review">Contribute</a>
+    </div>
+
+    <div class="license">
+      <a href="http://opensource.org/licenses/MIT">License</a>
+    </div>
+  </footer>
+
+</div>

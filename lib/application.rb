@@ -1,10 +1,17 @@
 require "sinatra"
 require "json"
 require "pony"
+require "httparty"
+require "pygments"
+require "gravatar"
+require "gitlab"
 
 configure do
   # A string describing the odds of a code review (e.g. "1:10").
   set :odds, ENV["ODDS"]
+
+  # A string describing a private token from GitLab.
+  set :gitlab_private_token, ENV["GITLAB_PRIVATE_TOKEN"]
 
   # A list of strings describing e-mail addresses a code review may be addressed to.
   raw_reviewers = ENV["REVIEWERS"].split(",")
@@ -30,6 +37,32 @@ Pony.options = {
   }
 }
 
+GitLab.configure do |config|
+  config.private_token = settings.gitlab_private_token
+end
+
+get "/preview" do
+  commit = {
+    "id" => "524127ddd12c845a85403fe40e2c333afd19434b",
+    "message" => "Make Subscription#preset accessible",
+    "timestamp" => "2011-12-12T14:27:31+02:00",
+    "url" => "http://git.hyper.no/hyper/hyper-alerts-code/commit/524127ddd12c845a85403fe40e2c333afd19434b",
+    "author" => {
+      "name" => "Johannes Gorset",
+      "email" => "johannes@hyper.no"
+    }
+  }
+
+  diff     = GitLab.diff commit["url"]
+  gravatar = Gravatar.new commit["author"]["email"]
+
+  erb :mail, locals: {
+    gravatar: gravatar,
+    commit: commit,
+    diff: diff
+  }
+end
+
 post "/" do
   data = JSON.parse request.body.read
 
@@ -45,23 +78,21 @@ post "/" do
       reviewer = reviewers.sample
 
       if reviewer
+        diff     = GitLab.diff commit["url"]
+        gravatar = Gravatar.new commit["author"]["email"]
 
         Pony.mail({
           to: reviewer[:work],
           from: "Hyper <no-reply@hyper.no>",
-          subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
-          body: erb(:reviewer_email, locals: {
-            reviewee: commit["author"]["name"],
-            url: commit["url"]
-          })
-        })
-
-        Pony.mail({
-          to: commit["author"]["email"],
-          from: "Hyper <no-reply@hyper.no>",
-          subject: "Your commit has been selected for review",
-          body: erb(:reviewee_email, locals: {
-            reviewer: reviewer,
+          cc: commit["author"]["email"],
+          subject: "Code review",
+          headers: {
+            "Content-Type" => "text/html"
+          },
+          body: erb(:mail, locals: {
+            gravatar: gravatar,
+            commit: commit,
+            diff: diff,
             url: commit["url"]
           })
         })

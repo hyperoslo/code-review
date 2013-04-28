@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ApplicationTest < MiniTest::Unit::TestCase
+class OddsTest < MiniTest::Unit::TestCase
   def test_parse
     chance = Odds.parse "1:2"
 
