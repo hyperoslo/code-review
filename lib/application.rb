@@ -33,28 +33,6 @@ end
 
 Reviewers.load settings.reviewers
 
-get "/preview" do
-  commit = {
-    "id" => "524127ddd12c845a85403fe40e2c333afd19434b",
-    "message" => "Make Subscription#preset accessible",
-    "timestamp" => "2011-12-12T14:27:31+02:00",
-    "url" => "http://git.hyper.no/hyper/hyper-alerts-code/commit/524127ddd12c845a85403fe40e2c333afd19434b",
-    "author" => {
-      "name" => "Johannes Gorset",
-      "email" => "johannes@hyper.no"
-    }
-  }
-
-  diff     = GitLab.diff commit["url"]
-  gravatar = Gravatar.new commit["author"]["email"]
-
-  erb :mail, locals: {
-    gravatar: gravatar,
-    commit: commit,
-    diff: diff
-  }
-end
-
 post "/" do
   data = JSON.parse request.body.read
 
