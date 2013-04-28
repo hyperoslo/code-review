@@ -22,6 +22,7 @@ The application looks to the following environment variables for its configurati
 * `SMTP_DOMAIN` - A string describing the SMTP domain.
 * `SMTP_USERNAME` - A string describing the SMTP username.
 * `SMTP_PASSWORD` - A string describing the SMTP password.
+* `GITLAB_PRIVATE_TOKEN` - A string describing a GitLab private token.
 
 ## Development
 
