@@ -15,7 +15,7 @@ ridicule [@espenhogbakk](https://github.com/espenhogbakk) whenever he version co
 The application looks to the following environment variables for its configuration:
 
 * `ODDS` - A string of the format "x:y" that describes the likelihood that a commit will be selected for review (e.g. `1:25`).
-* `REVIEWERS` - A comma-separated list of e-mail addresses that code reviews may be addressed to (e.g. `john@work.com:jane@work.com`)
+* `REVIEWERS` - A comma-separated list of e-mail addresses that code reviews may be addressed to (e.g. `john@work.com,jane@work.com`)
 * `SMTP_HOST` - A string describing the SMTP host.
 * `SMTP_PORT` - A string describing the SMTP port.
 * `SMTP_DOMAIN` - A string describing the SMTP domain.
