@@ -4,6 +4,7 @@ require "pony"
 require "httparty"
 require "pygments"
 require "gravatar"
+require "odds"
 require "gitlab"
 
 configure do
