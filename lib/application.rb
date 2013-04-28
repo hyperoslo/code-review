@@ -6,23 +6,12 @@ require "pygments"
 require "gravatar"
 require "odds"
 require "gitlab"
+require "reviewers"
 
 configure do
-  # A string describing the odds of a code review (e.g. "1:10").
   set :odds, ENV["ODDS"]
-
-  # A string describing a private token from GitLab.
   set :gitlab_private_token, ENV["GITLAB_PRIVATE_TOKEN"]
-
-  # A list of strings describing e-mail addresses a code review may be addressed to.
-  raw_reviewers = ENV["REVIEWERS"].split(",")
-  reviewers = []
-  raw_reviewers.each do |reviewer|
-    personal, work = reviewer.split(":")
-    reviewers << { personal: personal, work: work }
-  end
-
-  set :reviewers, reviewers
+  set :reviewers, ENV["REVIEWERS"]
 end
 
 Pony.options = {
@@ -41,6 +30,8 @@ Pony.options = {
 GitLab.configure do |config|
   config.private_token = settings.gitlab_private_token
 end
+
+Reviewers.load settings.reviewers
 
 get "/preview" do
   commit = {
@@ -72,18 +63,14 @@ post "/" do
   data["commits"].each do |commit|
     if rand(100) <= chance
 
-      reviewers = settings.reviewers.reject do |reviewer|
-        reviewer.has_value? commit["author"]["email"]
-      end
+      reviewers = Reviewers.for commit["author"]["email"]
 
-      reviewer = reviewers.sample
-
-      if reviewer
+      if reviewer = reviewers.sample
         diff     = GitLab.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
         Pony.mail({
-          to: reviewer[:work],
+          to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
           cc: commit["author"]["email"],
           subject: "Code review",

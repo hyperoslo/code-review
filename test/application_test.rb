@@ -46,7 +46,7 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ).
       with(
         has_entries(
-          to: any_of("tim@hyper.no", "johannes@hyper.no", "espen@hyper.no"),
+          to: "tim@hyper.no",
           cc: "johannes@hyper.no",
           subject: "Code review",
           from: "Hyper <no-reply@hyper.no>"
