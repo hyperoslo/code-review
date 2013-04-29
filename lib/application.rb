@@ -34,6 +34,32 @@ end
 
 Reviewers.load settings.reviewers
 
+get "/preview" do
+  commit = {
+    "id" => "2637cc7448594cdb8c5baac2d87c68a2f587a0c0",
+    "message" => "Use mapbox v1.0.1 for all browsers",
+    "timestamp" => "2011-12-12T14:27:31+02:00",
+    "url" => "http://git.hyper.no/mesan-code/commit/2637cc7448594cdb8c5baac2d87c68a2f587a0c0",
+    "author" => {
+      "name" => "Johannes Gorset",
+      "email" => "jgorset@gmail.com"
+    }
+  }
+
+  diff     = GitLab.diff commit["url"]
+  gravatar = Gravatar.new commit["author"]["email"]
+
+  html = erb :mail, locals: {
+    gravatar: gravatar,
+    commit: commit,
+    diff: diff,
+  }
+
+  mail = Premailer.new html, with_html_string: true
+
+  mail.to_inline_css
+end
+
 post "/" do
   data = JSON.parse request.body.read
 
