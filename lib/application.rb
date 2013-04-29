@@ -7,6 +7,7 @@ require "gravatar"
 require "odds"
 require "gitlab"
 require "reviewers"
+require "premailer"
 
 configure do
   set :odds, ENV["ODDS"]
@@ -44,6 +45,14 @@ post "/" do
         diff     = GitLab.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
+        html = erb :mail, locals: {
+          gravatar: gravatar,
+          commit: commit,
+          diff: diff
+        }
+
+        mail = Premailer.new html, with_html_string: true
+
         Pony.mail({
           to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
@@ -52,12 +61,7 @@ post "/" do
           headers: {
             "Content-Type" => "text/html"
           },
-          body: erb(:mail, locals: {
-            gravatar: gravatar,
-            commit: commit,
-            diff: diff,
-            url: commit["url"]
-          })
+          body: mail.to_inline_css
         })
 
       end
