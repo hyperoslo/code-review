@@ -6,6 +6,7 @@ gem "pony"
 gem "sentry-raven"
 gem "httparty"
 gem "pygments.rb"
+gem "sass"
 gem "gravatar-ultimate", github: "jgorset/gravatar"
 
 group :development do
