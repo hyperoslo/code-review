@@ -60,4 +60,17 @@ class ApplicationTest < MiniTest::Unit::TestCase
 
     post "/", payload.to_json
   end
+
+  def test_github_webhook
+    Pony.stubs(:mail).returns true
+    post "/", payload: github_payload.to_json
+  end
+
+  def test_github_payload_structure_resembles_the_one_from_gitlab
+    commit = github_payload[:commits].first
+    assert_equal 'lolwut@noway.biz', commit[:author][:email], "Couldn't find the author's email. Is this really from Github?"
+    assert_equal 'Garen Torikian', commit[:author][:name], "Couldn't find the commit author's name either"
+    expected_url = 'https://github.com/octokitty/testing/commit/c441029cf673f84c8b7db52d0a5944ee5c52ff89'
+    assert_equal expected_url, commit[:url], "Expected url was not found in the payload"
+  end
 end

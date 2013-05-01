@@ -31,10 +31,10 @@ Pony.options = {
 }
 
 post "/" do
-  data = JSON.parse request.body.read
+  content = from_github? ? params[:payload] : request.body.read
+  data = JSON.parse content
 
   chance = Odds.parse settings.odds
-
   data["commits"].each do |commit|
     if rand(100) <= chance
 
@@ -71,4 +71,8 @@ post "/" do
   end
 
   ""
+end
+
+def from_github?
+  params.has_key? 'payload'
 end
