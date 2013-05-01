@@ -23,9 +23,10 @@ class ApplicationTest < MiniTest::Unit::TestCase
       },
       commits: [
         {
-          id: "450d0de7532f8b663b9c5cce183b...",
+          id: "b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
           message: "Update Catalan translation to e38cb41.",
           timestamp: "2011-12-12T14:27:31+02:00",
+          url: "http://localhost/diaspora/commits/b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
           author: {
            name: "Johannes Gorset",
            email: "johannes@hyper.no"
@@ -34,16 +35,9 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ]
     }
 
-    Pony.
+    GitLab.
       expects(
-        :mail
-      ).
-      with(
-        has_entries(
-          to: any_of("tim@hyper.no", "johannes@hyper.no", "espen@hyper.no"),
-          subject: "You've been selected to review Johannes Gorset's commit",
-          from: "Hyper <no-reply@hyper.no>"
-        )
+        :diff
       )
 
     Pony.
@@ -52,8 +46,9 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ).
       with(
         has_entries(
-          to: "johannes@hyper.no",
-          subject: "Your commit has been selected for review",
+          to: "tim@hyper.no",
+          cc: "johannes@hyper.no",
+          subject: "Code review",
           from: "Hyper <no-reply@hyper.no>"
         )
       )

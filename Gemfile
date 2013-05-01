@@ -4,6 +4,12 @@ source "https://rubygems.org"
 gem "sinatra"
 gem "pony"
 gem "sentry-raven"
+gem "httparty"
+gem "pygments.rb"
+gem "sass"
+gem "gravatar-ultimate", github: "jgorset/gravatar"
+gem "premailer"
+gem "nokogiri"
 
 group :development do
   gem "rack-test"

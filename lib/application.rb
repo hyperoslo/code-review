@@ -1,20 +1,18 @@
 require "sinatra"
 require "json"
 require "pony"
+require "httparty"
+require "pygments"
+require "gravatar"
+require "odds"
+require "gitlab"
+require "reviewers"
+require "premailer"
 
 configure do
-  # A string describing the odds of a code review (e.g. "1:10").
   set :odds, ENV["ODDS"]
-
-  # A list of strings describing e-mail addresses a code review may be addressed to.
-  raw_reviewers = ENV["REVIEWERS"].split(",")
-  reviewers = []
-  raw_reviewers.each do |reviewer|
-    personal, work = reviewer.split(":")
-    reviewers << { personal: personal, work: work }
-  end
-
-  set :reviewers, reviewers
+  set :gitlab_private_token, ENV["GITLAB_PRIVATE_TOKEN"]
+  set :reviewers, ENV["REVIEWERS"]
 end
 
 Pony.options = {
@@ -30,40 +28,67 @@ Pony.options = {
   }
 }
 
+GitLab.configure do |config|
+  config.private_token = settings.gitlab_private_token
+end
+
+Reviewers.load settings.reviewers
+
+get "/preview" do
+  commit = {
+    "id" => "2637cc7448594cdb8c5baac2d87c68a2f587a0c0",
+    "message" => "Use mapbox v1.0.1 for all browsers",
+    "timestamp" => "2011-12-12T14:27:31+02:00",
+    "url" => "http://git.hyper.no/mesan-code/commit/2637cc7448594cdb8c5baac2d87c68a2f587a0c0",
+    "author" => {
+      "name" => "Johannes Gorset",
+      "email" => "jgorset@gmail.com"
+    }
+  }
+
+  diff     = GitLab.diff commit["url"]
+  gravatar = Gravatar.new commit["author"]["email"]
+
+  html = erb :mail, locals: {
+    gravatar: gravatar,
+    commit: commit,
+    diff: diff,
+  }
+
+  mail = Premailer.new html, with_html_string: true
+
+  mail.to_inline_css
+end
+
 post "/" do
   content = from_github? ? params[:payload] : request.body.read
   data = JSON.parse content
 
-  chance = Odds.parse settings.odds
   data["commits"].each do |commit|
-    if rand(100) <= chance
+    if Odds.roll settings.odds
+      reviewers = Reviewers.for commit["author"]["email"]
 
-      reviewers = settings.reviewers.reject do |reviewer|
-        reviewer.has_value? commit["author"]["email"]
-      end
+      if reviewer = reviewers.sample
+        diff     = GitLab.diff commit["url"]
+        gravatar = Gravatar.new commit["author"]["email"]
 
-      reviewer = reviewers.sample
+        html = erb :mail, locals: {
+          gravatar: gravatar,
+          commit: commit,
+          diff: diff
+        }
 
-      if reviewer
-
-        Pony.mail({
-          to: reviewer[:work],
-          from: "Hyper <no-reply@hyper.no>",
-          subject: "You've been selected to review #{commit["author"]["name"]}'s commit",
-          body: erb(:reviewer_email, locals: {
-            reviewee: commit["author"]["name"],
-            url: commit["url"]
-          })
-        })
+        mail = Premailer.new html, with_html_string: true
 
         Pony.mail({
-          to: commit["author"]["email"],
+          to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
-          subject: "Your commit has been selected for review",
-          body: erb(:reviewee_email, locals: {
-            reviewer: reviewer,
-            url: commit["url"]
-          })
+          cc: commit["author"]["email"],
+          subject: "Code review",
+          headers: {
+            "Content-Type" => "text/html"
+          },
+          body: mail.to_inline_css
         })
 
       end

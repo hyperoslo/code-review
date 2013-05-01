@@ -1,0 +1,47 @@
+<style>
+
+  <%= sass :stylesheet %>
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="stylesheets/github.css" />
+
+<div id="container">
+
+  <header>
+    <h1>Code Review</h1>
+  </header>
+
+  <div class="commit">
+    <strong class="message"><%= commit["message"] %></strong>
+    <div class="meta">
+      <div class="author">
+        <img class="portrait" height="24" width="24" src="<%= gravatar.image_url %>" />
+        <span class="name"><%= commit["author"]["name"] %></span>
+      </div>
+      <div class="sha">
+        <span class="label">commit</span>
+        <span class="value"><a href="<%= commit["url"] %>"><%= commit["id"] %></a></span>
+      </div >
+    </div>
+  </div>
+
+  <div class="diff">
+    <%= Pygments.highlight diff, lexer: "diff", options: { linespans: "line", lineseparator: "" } %>
+  </div>
+
+  <footer>
+    <div class="credits">
+      <a href="http://hyper.no">Hyper</a> made this
+    </div>
+
+    <div class="contribute">
+      <a href="https://github.com/hyperoslo/code-review">Contribute</a>
+    </div>
+
+    <div class="license">
+      <a href="http://opensource.org/licenses/MIT">License</a>
+    </div>
+  </footer>
+
+</div>
