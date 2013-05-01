@@ -83,7 +83,7 @@ post "/" do
           to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
           cc: commit["author"]["email"],
-          subject: "Code review",
+          subject: "Code review for commit #{commit["id"]}",
           headers: {
             "Content-Type" => "text/html"
           },
