@@ -63,6 +63,9 @@ end
 post "/" do
   data = JSON.parse request.body.read
 
+  repository_name = data["repository"]["name"]
+  branch = data["ref"].split("/").last
+
   data["commits"].each do |commit|
     if Odds.roll settings.odds
       reviewers = Reviewers.for commit["author"]["email"]
@@ -83,7 +86,7 @@ post "/" do
           to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
           cc: commit["author"]["email"],
-          subject: "Code review for commit #{commit["id"]}",
+          subject: "Code review for #{repository_name}/#{branch}@#{commit["id"][0,7]}",
           headers: {
             "Content-Type" => "text/html"
           },

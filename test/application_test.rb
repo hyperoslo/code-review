@@ -48,7 +48,7 @@ class ApplicationTest < MiniTest::Unit::TestCase
         has_entries(
           to: "tim@hyper.no",
           cc: "johannes@hyper.no",
-          subject: "Code review for commit b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
+          subject: "Code review for Diaspora/master@b6568db",
           from: "Hyper <no-reply@hyper.no>"
         )
       )
