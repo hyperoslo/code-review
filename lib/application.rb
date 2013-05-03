@@ -13,6 +13,7 @@ configure do
   set :odds, ENV["ODDS"]
   set :gitlab_private_token, ENV["GITLAB_PRIVATE_TOKEN"]
   set :reviewers, ENV["REVIEWERS"]
+  set :sender, ENV["SENDER"]
 end
 
 Pony.options = {
@@ -84,7 +85,7 @@ post "/" do
 
         Pony.mail({
           to: reviewer.email,
-          from: "Hyper <no-reply@hyper.no>",
+          from: settings.sender,
           reply_to: commit["author"]["email"],
           cc: commit["author"]["email"],
           subject: "Code review for #{repository_name}/#{branch}@#{commit["id"][0,7]}",
