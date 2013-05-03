@@ -85,6 +85,7 @@ post "/" do
         Pony.mail({
           to: reviewer.email,
           from: "Hyper <no-reply@hyper.no>",
+          reply_to: commit["author"]["email"],
           cc: commit["author"]["email"],
           subject: "Code review for #{repository_name}/#{branch}@#{commit["id"][0,7]}",
           headers: {
