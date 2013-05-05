@@ -5,7 +5,7 @@ class GitLabTest < MiniTest::Unit::TestCase
     GitLab.configure do |config|
       config.private_token = "<private token>"
     end
-    
+
     assert_equal "<private token>", GitLab.private_token
   end
 
