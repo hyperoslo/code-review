@@ -5,7 +5,9 @@ require "httparty"
 require "pygments"
 require "gravatar"
 require "odds"
-require "gitlab"
+require "git_service"
+require "git_service/gitlab"
+require "git_service/github"
 require "reviewers"
 require "premailer"
 
@@ -69,7 +71,7 @@ post "/" do
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample
-        diff     = GitLab.diff commit["url"]
+        diff     = GitService.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
         html = erb :mail, locals: {

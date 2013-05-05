@@ -58,6 +58,7 @@ class ApplicationTest < MiniTest::Unit::TestCase
 
   def test_github_webhook
     Pony.stubs(:mail).returns true
+    GitHub.stubs(:diff)
     post "/", payload: github_payload.to_json
   end
 
