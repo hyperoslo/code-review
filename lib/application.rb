@@ -5,7 +5,9 @@ require "httparty"
 require "pygments"
 require "gravatar"
 require "odds"
-require "gitlab"
+require "git_service"
+require "git_service/gitlab"
+require "git_service/github"
 require "reviewers"
 require "premailer"
 
@@ -62,7 +64,8 @@ get "/preview" do
 end
 
 post "/" do
-  data = JSON.parse request.body.read
+  content = from_github? ? params[:payload] : request.body.read
+  data = JSON.parse content
 
   repository_name = data["repository"]["name"]
   branch = data["ref"].split("/").last
@@ -72,7 +75,7 @@ post "/" do
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample
-        diff     = GitLab.diff commit["url"]
+        diff     = GitService.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
         html = erb :mail, locals: {
@@ -100,4 +103,8 @@ post "/" do
   end
 
   ""
+end
+
+def from_github?
+  params.has_key? 'payload'
 end
