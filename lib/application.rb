@@ -5,9 +5,7 @@ require "httparty"
 require "pygments"
 require "gravatar"
 require "odds"
-require "git_service"
-require "git_service/gitlab"
-require "git_service/github"
+require "services"
 require "reviewers"
 require "premailer"
 
@@ -31,25 +29,32 @@ Pony.options = {
   }
 }
 
-GitLab.configure do |config|
+Services::GitLab.configure do |config|
   config.private_token = settings.gitlab_private_token
 end
 
 Reviewers.load settings.reviewers
 
 post "/" do
-  content = from_github? ? params[:payload] : request.body.read
-  data = JSON.parse content
+  if params.include? "service"
+    service = Services.lookup params[:service]
+  else
+    warn "Queries that don't specify a service are deprecated."
 
-  repository_name = data["repository"]["name"]
-  branch = data["ref"].split("/").last
+    service = Services::GitLab
+  end
+
+  data = service.parse_request request
+
+  repository = data["repository"]["name"]
+  branch     = data["ref"].split("/").last
 
   data["commits"].each do |commit|
     if Odds.roll settings.odds
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample
-        diff     = GitService.diff commit["url"]
+        diff     = service.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
         html = erb :mail, locals: {
@@ -65,7 +70,7 @@ post "/" do
           from: settings.sender,
           reply_to: commit["author"]["email"],
           cc: commit["author"]["email"],
-          subject: "Code review for #{repository_name}/#{branch}@#{commit["id"][0,7]}",
+          subject: "Code review for #{repository}/#{branch}@#{commit["id"][0,7]}",
           headers: {
             "Content-Type" => "text/html"
           },
@@ -77,8 +82,4 @@ post "/" do
   end
 
   ""
-end
-
-def from_github?
-  params.has_key? 'payload'
 end
