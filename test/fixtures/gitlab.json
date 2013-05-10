@@ -6,9 +6,10 @@
   "user_name": "John Smith",
   "repository": {
     "name": "Diaspora",
-    "url": "git@localhost:diaspora.git",
+    "url": "localhost/diaspora",
     "description": "",
-    "homepage": "http://localhost/diaspora",
+    "homepage": "localhost/diaspora",
+    "private": true
   },
   "commits": [
     {
@@ -17,20 +18,9 @@
       "timestamp": "2011-12-12T14:27:31+02:00",
       "url": "http://localhost/diaspora/commits/b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
       "author": {
-        "name": "Jordi Mallach",
-        "email": "jordi@softcatala.org",
+        "name": "Johannes Gorset",
+        "email": "johannes@hyper.no"
       }
-    },
-    {
-      "id": "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
-      "message": "fixed readme",
-      "timestamp": "2012-01-03T23:36:29+02:00",
-      "url": "http://localhost/diaspora/commits/da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
-      "author": {
-        "name": "GitLab dev user",
-        "email": "gitlabdev@dv6700.(none)",
-      },
-    },
-  ],
-  "total_commits_count": 4,
-};
+    }
+  ]
+}
