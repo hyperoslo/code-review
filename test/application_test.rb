@@ -27,7 +27,9 @@ class ApplicationTest < MiniTest::Unit::TestCase
         )
       )
 
-    post "/", fixture("gitlab.json")
+    json = fixture "gitlab.json"
+
+    post "/", json
   end
 
   def test_github_webhook
