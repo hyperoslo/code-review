@@ -10,6 +10,11 @@ ridicule [@espenhogbakk](https://github.com/espenhogbakk) whenever he version co
 
 ![Example](https://raw.github.com/hyperoslo/code-review/master/doc/example.png)
 
+## Usage
+
+Create a post-receive hook to hit your code review application and specify the service you're using
+in the `service` parameter (e.g. `http://review.example.org?service=github`).
+
 ## Configuration
 
 The application looks to the following environment variables for its configuration:
