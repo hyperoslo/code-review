@@ -1,4 +1,6 @@
-require "./application"
+$: << "lib"
+
+require "application"
 require "raven"
 
 Raven.configure do |config|
