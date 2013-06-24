@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/alexdunae/premailer.git
+  revision: 023af276c8106294980eb9007e7ca4901fd568fd
+  specs:
+    premailer (1.7.3)
+      css_parser (>= 1.1.9)
+      htmlentities (>= 4.0.0)
+
+GIT
   remote: git://github.com/jgorset/gravatar.git
   revision: ee0dc39ef560eca9f9912f7566f1ed3935e75430
   specs:
@@ -59,9 +67,6 @@ GEM
     pony (1.4)
       mail (> 2.0)
     posix-spawn (0.3.6)
-    premailer (1.7.3)
-      css_parser (>= 1.1.9)
-      htmlentities (>= 4.0.0)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -118,7 +123,7 @@ DEPENDENCIES
   mocha
   nokogiri
   pony
-  premailer
+  premailer!
   pygments.rb
   rack-test
   rake

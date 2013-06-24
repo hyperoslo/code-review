@@ -7,7 +7,7 @@ gem "httparty"
 gem "pygments.rb"
 gem "sass"
 gem "gravatar-ultimate", github: "jgorset/gravatar"
-gem "premailer"
+gem "premailer", github: "alexdunae/premailer"
 gem "nokogiri"
 
 group :development do

@@ -63,7 +63,7 @@ post "/" do
           diff: diff
         }
 
-        mail = Premailer.new html, with_html_string: true, encoding: "UTF-8"
+        mail = Premailer.new html, with_html_string: true, input_encoding: "UTF-8"
 
         Pony.mail({
           to: reviewer.email,
