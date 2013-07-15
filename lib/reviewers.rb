@@ -18,16 +18,12 @@ module Reviewers
     # Returns an Array of Reviewer instances.
     def for email, groups=nil
     	if groups
-    		reviewers = select do |reviewer|
-	        reviewer.has_groups? groups
-	      end
-	      reviewers.reject do |reviewer|
-	        reviewer.emails.include? email
+    		select do |reviewer|
+	        reviewer.has_groups? groups and !reviewer.emails.include? email
 	      end
     	else
-	      reject do |reviewer|
-	        reviewer.emails.include? email
-	        reviewer.groups.size > 0 				# only include reviwers that does not have groups
+	      reviewers = reject do |reviewer|
+	        reviewer.groups.size > 0 or	reviewer.emails.include? email
 	      end
     	end
     end

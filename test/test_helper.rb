@@ -9,7 +9,7 @@ Coveralls.wear!
 
 ENV["RACK_ENV"]   = "test"
 ENV["ODDS"]       = "1:1"
-ENV["REVIEWERS"]  = "johannes@hyper.no:jgorset@gmail.com;ruby;javascript,tim@hyper.no,harald@ringvold.nu;javascript;ruby"
+ENV["REVIEWERS"]  = "johannes@hyper.no:jgorset@gmail.com,tim@hyper.no,harald@mjf.nu,harald@ringvold.nu;javascript;ruby"
 ENV["SENDER"]     = "Hyper <no-reply@hyper.no>"
 
 require "application"

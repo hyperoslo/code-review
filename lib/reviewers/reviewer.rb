@@ -32,7 +32,7 @@ module Reviewers
       has_groups = groups.map do |group|
       	self.groups.include? group
       end
-      return true if has_groups.include? true
+			has_groups.include? true
     end
 
     # Returns true if the reviewer has the group
