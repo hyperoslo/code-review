@@ -19,7 +19,7 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ).
       with(
         has_entries(
-          to: "tim@hyper.no",
+        	to: "tim@hyper.no",
           reply_to: "johannes@hyper.no",
           cc: "johannes@hyper.no",
           subject: "Code review for testing/master@c441029",
@@ -44,7 +44,7 @@ class ApplicationTest < MiniTest::Unit::TestCase
       ).
       with(
         has_entries(
-          to: "tim@hyper.no",
+        	to: "tim@hyper.no",
           reply_to: "johannes@hyper.no",
           cc: "johannes@hyper.no",
           subject: "Code review for Diaspora/master@b6568db",
@@ -55,5 +55,55 @@ class ApplicationTest < MiniTest::Unit::TestCase
     json = fixture "gitlab.json"
 
     post "/?service=gitlab", json
+  end
+
+  def test_gitlab_with_groups
+    Services::GitLab.
+      expects(
+        :diff
+      )
+
+    Pony.
+      expects(
+        :mail
+      ).
+      with(
+        has_entries(
+          to: "harald@ringvold.nu",
+          reply_to: "johannes@hyper.no",
+          cc: "johannes@hyper.no",
+          subject: "Code review for Diaspora/master@b6568db",
+          from: "Hyper <no-reply@hyper.no>"
+        )
+      )
+
+    json = fixture "gitlab.json"
+
+    post "/?service=gitlab&groups=ruby,javascript", json
+  end
+
+  def test_github_with_groups
+    Services::GitHub.
+      expects(
+        :diff
+      )
+
+    Pony.
+      expects(
+        :mail
+      ).
+      with(
+        has_entries(
+          to: "harald@ringvold.nu",
+          reply_to: "johannes@hyper.no",
+          cc: "johannes@hyper.no",
+          subject: "Code review for testing/master@c441029",
+          from: "Hyper <no-reply@hyper.no>"
+        )
+      )
+
+    json = fixture "github.json"
+
+    post "/?service=github&groups=ruby,javascript", payload: json
   end
 end

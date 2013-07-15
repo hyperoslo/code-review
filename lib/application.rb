@@ -51,7 +51,7 @@ post "/" do
 
   data["commits"].each do |commit|
     if Odds.roll settings.odds
-      reviewers = Reviewers.for commit["author"]["email"]
+      reviewers = Reviewers.for commit["author"]["email"], ( params.include?("groups") ? params[:groups].split(",") : nil )
 
       if reviewer = reviewers.sample
         diff     = service.diff commit["url"]
