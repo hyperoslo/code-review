@@ -28,6 +28,7 @@ The application looks to the following environment variables for its configurati
 * `SMTP_USERNAME` - A string describing the SMTP username.
 * `SMTP_PASSWORD` - A string describing the SMTP password.
 * `GITLAB_PRIVATE_TOKEN` - A string describing a GitLab private token.
+* `GUARANTEED_REVIEW` - A string that will automatically qualify commits for review (defaults to `please review`).
 
 ## Development
 

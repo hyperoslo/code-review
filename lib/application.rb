@@ -14,6 +14,7 @@ configure do
   set :gitlab_private_token, ENV["GITLAB_PRIVATE_TOKEN"]
   set :reviewers, ENV["REVIEWERS"]
   set :sender, ENV["SENDER"]
+  set :guaranteed_review, ENV["GUARANTEED_REVIEW"] || "please review"
 end
 
 Pony.options = {
@@ -50,7 +51,7 @@ post "/" do
   branch     = data["ref"].split("/").last
 
   data["commits"].each do |commit|
-    if Odds.roll settings.odds
+    if Odds.roll settings.odds or guaranteed_review? commit
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample
@@ -82,4 +83,13 @@ post "/" do
   end
 
   ""
+end
+
+# Check if the commit should guarantee a review.
+#
+# commit - A hash describing a commit.
+#
+# Returns a boolean describing if a commit should be reviewed or not.
+def guaranteed_review? commit
+  commit["message"].downcase.include? settings.guaranteed_review.downcase
 end
