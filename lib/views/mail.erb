@@ -13,7 +13,9 @@
   </header>
 
   <div class="commit">
-    <strong class="message"><%= commit["message"] %></strong>
+    <p class="message">
+      <%= format_commit_message commit["message"] %>
+    </p>
     <div class="meta">
       <div class="author">
         <img class="portrait" height="24" width="24" src="<%= gravatar.image_url %>" />

@@ -8,6 +8,7 @@ require "odds"
 require "services"
 require "reviewers"
 require "premailer"
+require "helpers"
 
 configure do
   set :odds, ENV["ODDS"]
