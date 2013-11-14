@@ -6,6 +6,9 @@ helpers do
 
     paragraphs[0] = "<strong class=\"action\">#{paragraphs.first}</strong>"
 
-    paragraphs.join
+    message = paragraphs.join "\n\n"
+    message = message.gsub "\n", "<br />"
+
+    message
   end
 end
