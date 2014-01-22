@@ -30,6 +30,11 @@ The application looks to the following environment variables for its configurati
 * `GITLAB_PRIVATE_TOKEN` - A string describing a GitLab private token.
 * `GUARANTEED_REVIEW` - A string that will automatically qualify commits for review (defaults to `please review`).
 
+Control over branches with post-receive hook URL params:
+
+* `only_branches` - single branch name or list of comma-separated branches (e.g. http://review.example.org?service=github&only_branches=master,dev). Commits only from listed branches will be selected for code review.
+* `except_branches` - works opposite to the previous option (e.g. http://review.example.org?service=github&except_branches=master,dev).
+
 ## Development
 
 Install the dependencies:
