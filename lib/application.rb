@@ -37,26 +37,33 @@ end
 
 Reviewers.load settings.reviewers
 
-post "/" do
+#filtering params
+before "/" do
   if params.include? "service"
-    service = Services.lookup params[:service]
+    @service = Services.lookup params[:service]
   else
     warn "Queries that don't specify a service are deprecated."
 
-    service = Services::GitLab
+    @service = Services::GitLab
   end
 
-  data = service.parse_request request
+  @data = @service.parse_request request
 
-  repository = data["repository"]["name"]
-  branch     = data["ref"].split("/").last
+  @repository = @data["repository"]["name"]
+  @branch     = @data["ref"].split("/").last
 
-  data["commits"].each do |commit|
+  halt 404 unless valid_branch? @branch
+end
+
+
+
+post "/" do
+  @data["commits"].each do |commit|
     if Odds.roll settings.odds or guaranteed_review? commit
       reviewers = Reviewers.for commit["author"]["email"]
 
       if reviewer = reviewers.sample
-        diff     = service.diff commit["url"]
+        diff     = @service.diff commit["url"]
         gravatar = Gravatar.new commit["author"]["email"]
 
         html = erb :mail, locals: {
@@ -72,7 +79,7 @@ post "/" do
           from: settings.sender,
           reply_to: commit["author"]["email"],
           cc: commit["author"]["email"],
-          subject: "Code review for #{repository}/#{branch}@#{commit["id"][0,7]}",
+          subject: "Code review for #{@repository}/#{@branch}@#{commit["id"][0,7]}",
           headers: {
             "Content-Type" => "text/html"
           },
@@ -93,4 +100,13 @@ end
 # Returns a boolean describing if a commit should be reviewed or not.
 def guaranteed_review? commit
   commit["message"].downcase.include? settings.guaranteed_review.downcase
+end
+
+def valid_branch? branch
+  if params[:only_branches].present?
+    return false unless params[:only_branches].split(",").include?(branch)
+  elsif params[:except_branches].present?
+    return false if params[:except_branches].split(",").include?(branch)
+  end
+  true
 end
