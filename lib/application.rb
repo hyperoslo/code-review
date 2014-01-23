@@ -52,7 +52,7 @@ before "/" do
   @repository = @data["repository"]["name"]
   @branch     = @data["ref"].split("/").last
 
-  halt 404 unless valid_branch? @branch
+  halt 412 unless valid_branch? @branch
 end
 
 

@@ -19,12 +19,12 @@ class BranchFilterTest < MiniTest::Unit::TestCase
 
   def test_inclusion_has_no_param
     post "/?service=gitlab&only_branches=dev", json
-    assert_equal last_response.status, 404
+    assert_equal last_response.status, 412
   end
 
   def test_exclusion_has_param
     post "/?service=gitlab&except_branches=master", json
-    assert_equal last_response.status, 404
+    assert_equal last_response.status, 412
   end
 
   def test_exclusion_has_no_param
