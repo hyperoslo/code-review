@@ -50,7 +50,7 @@ before "/" do
   @data = @service.parse_request request
 
   @repository = @data["repository"]["name"]
-  @branch     = @data["ref"].split("/").last
+  @branch     = @data["ref"].sub("refs/heads/", "")
 
   halt 412 unless valid_branch? @branch
 end
