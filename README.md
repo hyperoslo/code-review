@@ -53,3 +53,7 @@ Run the server:
 
 Hyper made this. We're a digital communications agency with a passion for good code,
 and if you're using this application we probably want to hire you.
+
+## License
+
+Code-Review is available under the MIT license. See the LICENSE file for more info.
