@@ -56,4 +56,4 @@ and if you're using this application we probably want to hire you.
 
 ## License
 
-Code-Review is available under the MIT license. See the LICENSE file for more info.
+Code review is available under the MIT license. See the LICENSE file for more info.
