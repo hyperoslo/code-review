@@ -15,6 +15,15 @@ ridicule [@espenhogbakk](https://github.com/espenhogbakk) whenever he version co
 Create a post-receive hook to hit your code review application and specify the service you're using
 in the `service` parameter (e.g. `http://review.example.org/?service=github`).
 
+### GitHub
+
+Set the content type for your push-event hook to `application/x-www-form-urlencoded`. Other
+content types, such as `application/json`, are currently [not supported](https://github.com/hyperoslo/code-review/issues/24).
+
+On creation of a new webhook, GitHub will [send a ping event](https://developer.github.com/changes/2014-2-10-ping-event-for-webhooks/). This is currently
+not handled appropriately, but its failure can be safely ignored.
+
+
 ## Configuration
 
 The application looks to the following environment variables for its configuration:
