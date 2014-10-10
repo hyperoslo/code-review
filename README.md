@@ -1,8 +1,8 @@
 # Code review
 
-[![Code Climate](https://codeclimate.com/github/hyperoslo/code-review.png)](https://codeclimate.com/github/hyperoslo/code-review)
-[![Build Status](https://travis-ci.org/hyperoslo/code-review.png?branch=master)](https://travis-ci.org/hyperoslo/code-review)
-[![Coverage Status](https://coveralls.io/repos/hyperoslo/code-review/badge.png?branch=master)](https://coveralls.io/r/hyperoslo/code-review)
+[![Build Status](https://img.shields.io/travis/hyperoslo/code-review.svg?style=flat)](https://travis-ci.org/hyperoslo/code-review)
+[![Code Climate](https://img.shields.io/codeclimate/github/hyperoslo/code-review.svg?style=flat)](https://codeclimate.com/github/hyperoslo/code-review)
+[![Coverage Status](https://img.shields.io/coveralls/hyperoslo/code-review.svg?style=flat)](https://coveralls.io/r/hyperoslo/code-review)
 
 We ship a lot of code at Hyper, and we're proud of every bit of it. We built this simple application to
 select random commits for review whenever we push code so we can show it off or
